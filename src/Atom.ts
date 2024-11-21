@@ -1,6 +1,6 @@
+import { StoreHandler } from "./StoreHandler";
 import type { CleanUp } from "./Types/CleanUp";
 import type { IReadOnlyAtom } from "./Types/IReadOnlyAtom";
-import { StoreHandler } from "./StoreHandler";
 import Broadcaster from "./Utils/Broadcaster";
 
 export default class Atom<T> implements IReadOnlyAtom<T> {

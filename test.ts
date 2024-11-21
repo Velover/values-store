@@ -1,4 +1,4 @@
-import { atom, batch, computed } from "./ValueStores";
+import { atom, batch, computed } from "./src";
 
 const atom_value = atom(1);
 const atom_value_2 = atom(2);

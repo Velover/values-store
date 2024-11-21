@@ -8,8 +8,8 @@ export function atom<T>(value: T) {
   return new Atom(value);
 }
 
-export type { IReadOnlyAtom } from "./Types/IReadOnlyAtom";
 export type { default as Atom } from "./Atom";
+export type { IReadOnlyAtom } from "./Types/IReadOnlyAtom";
 export const effect = Effect;
 export const computed = Computed;
 export const subscribe = Subscribe;

@@ -1,6 +1,6 @@
 import Computed from "./Computed";
+import type { CleanUp } from "./Types/CleanUp";
 import type { IReadOnlyAtom } from "./Types/IReadOnlyAtom";
-import type { CleanUp } from "./Utils/Types";
 
 export default function Subscribe<T>(
   selector: () => T | IReadOnlyAtom<T>,
