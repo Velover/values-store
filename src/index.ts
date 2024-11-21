@@ -15,3 +15,4 @@ export const computed = Computed;
 export const subscribe = Subscribe;
 export const peek = StoreHandler.Peek;
 export const batch = StoreHandler.Batch;
+export const capture = StoreHandler.Capture;
