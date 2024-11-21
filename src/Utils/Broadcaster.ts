@@ -17,6 +17,7 @@ export default class Broadcaster<T extends unknown[]> {
 
   Fire(...args: T) {
     for (const listener of this.listeners_) {
+      console.log("fired for", listener);
       try {
         listener(...args);
       } catch (error_message) {

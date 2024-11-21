@@ -9,17 +9,25 @@ export default function Computed<T>(
   let [captured_atoms, result] = StoreHandler.Capture(callback);
   const computed_atom = new Atom<T>(result);
 
-  const subscriptions: CleanUp[] = [];
+  let subscriptions: CleanUp[] = [];
 
   const CleanSubscriptions = () => {
     for (const cleanup of subscriptions) {
       cleanup();
     }
+    subscriptions = [];
   };
 
   const OnChanged = () => {
     CleanSubscriptions();
     [captured_atoms, result] = StoreHandler.Capture(callback);
+    const previous_value = computed_atom.Peek();
+    console.log(
+      "Computed value has updated to ",
+      result,
+      previous_value,
+      computed_atom
+    );
     computed_atom.Set(result);
     for (const atom of captured_atoms) {
       subscriptions.push(atom.Subscribe(OnChanged));
@@ -30,5 +38,11 @@ export default function Computed<T>(
     subscriptions.push(atom.Subscribe(OnChanged));
   }
 
-  return [computed_atom, CleanSubscriptions];
+  return [
+    computed_atom,
+    () => {
+      console.log("Disconnected", computed_atom.DebugId);
+      CleanSubscriptions();
+    },
+  ];
 }

@@ -3,12 +3,13 @@ import type { CleanUp } from "./Types/CleanUp";
 
 export default function Effect(callback: () => CleanUp | void): CleanUp {
   let [captured_atoms, cleanup] = StoreHandler.Capture(callback);
-  const subscriptions: CleanUp[] = [];
+  let subscriptions: CleanUp[] = [];
 
   const CleanSubscriptions = () => {
     for (const cleanup of subscriptions) {
       cleanup();
     }
+    subscriptions = [];
   };
 
   const OnChanged = () => {

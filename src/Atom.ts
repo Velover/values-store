@@ -4,6 +4,7 @@ import type { IReadOnlyAtom } from "./Types/IReadOnlyAtom";
 import Broadcaster from "./Utils/Broadcaster";
 
 export default class Atom<T> implements IReadOnlyAtom<T> {
+  DebugId = Math.random();
   private value_: T;
   private changed_event_ = new Broadcaster<[value: T, previous_value: T]>();
 
@@ -11,7 +12,6 @@ export default class Atom<T> implements IReadOnlyAtom<T> {
     this.value_ = value;
   }
 
-  /**lowlevel call to get subscribers*/
   GetSubscribers() {
     return this.changed_event_.GetListeners();
   }
@@ -37,23 +37,19 @@ export default class Atom<T> implements IReadOnlyAtom<T> {
     ];
   }
 
-  /**gets the value of the atom */
   Get() {
     StoreHandler.ReportOnRead(this);
     return this.value_;
   }
 
-  /**gets the value without notifying*/
   Peek() {
     return this.value_;
   }
 
-  /**subscribes to atom change */
   Subscribe(callback: (value: T, previous_value: T) => void): CleanUp {
     return this.changed_event_.Listen(callback);
   }
 
-  /**subscribes to atom change and immediately executes*/
   Effect(callback: (value: T, previous_value?: T) => void): CleanUp {
     callback(this.value_);
     return this.Subscribe(callback);
