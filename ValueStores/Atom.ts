@@ -1,7 +1,7 @@
-import type { IReadOnlyAtom } from "./IReadOnlyAtom";
+import type { CleanUp } from "./Types/CleanUp";
+import type { IReadOnlyAtom } from "./Types/IReadOnlyAtom";
 import { StoreHandler } from "./StoreHandler";
 import Broadcaster from "./Utils/Broadcaster";
-import type { CleanUp } from "./Utils/Types";
 
 export default class Atom<T> implements IReadOnlyAtom<T> {
   private value_: T;
@@ -9,6 +9,11 @@ export default class Atom<T> implements IReadOnlyAtom<T> {
 
   constructor(value: T) {
     this.value_ = value;
+  }
+
+  /**lowlevel call to get subscribers*/
+  GetSubscribers() {
+    return this.changed_event_.GetListeners();
   }
 
   /**lowlevel call to trigger changed event*/
@@ -21,7 +26,10 @@ export default class Atom<T> implements IReadOnlyAtom<T> {
     if (value === this.value_) return;
     const previous_value = value;
     this.value_ = value;
-    if (StoreHandler.IsBatch) return;
+    if (StoreHandler.IsBatch()) {
+      StoreHandler.ReportOnBatchWrite(this, value, previous_value);
+      return;
+    }
     this.changed_event_.Fire(value, previous_value);
   }
 

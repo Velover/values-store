@@ -1,7 +1,7 @@
 import Atom from "./Atom";
-import type { IReadOnlyAtom } from "./IReadOnlyAtom";
+import type { IReadOnlyAtom } from "./Types/IReadOnlyAtom";
 import { StoreHandler } from "./StoreHandler";
-import type { CleanUp } from "./Utils/Types";
+import type { CleanUp } from "./Types/CleanUp";
 
 export default function Computed<T>(
   callback: () => T

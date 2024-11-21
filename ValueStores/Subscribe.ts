@@ -1,5 +1,5 @@
-import Computed from "./Cumputed";
-import type { IReadOnlyAtom } from "./IReadOnlyAtom";
+import Computed from "./Computed";
+import type { IReadOnlyAtom } from "./Types/IReadOnlyAtom";
 import type { CleanUp } from "./Utils/Types";
 
 export default function Subscribe<T>(

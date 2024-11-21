@@ -1,8 +1,12 @@
 import RemoveElementFromArray from "./RemoveElementFromArray";
-import type { CleanUp } from "./Types";
+import type { CleanUp } from "../Types/CleanUp";
 
 export default class Broadcaster<T extends unknown[]> {
   private listeners_: ((...args: T) => void)[] = [];
+
+  GetListeners() {
+    return [...this.listeners_];
+  }
 
   Listen(callback: (...args: T) => void): CleanUp {
     this.listeners_.push(callback);

@@ -1,5 +1,5 @@
 import { StoreHandler } from "./StoreHandler";
-import type { CleanUp } from "./Utils/Types";
+import type { CleanUp } from "./Types/CleanUp";
 
 export default function Effect(callback: () => CleanUp | void): CleanUp {
   let [captured_atoms, cleanup] = StoreHandler.Capture(callback);
