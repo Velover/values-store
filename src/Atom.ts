@@ -16,11 +16,6 @@ export default class Atom<T> implements IReadOnlyAtom<T> {
     return this.changed_event_.GetListeners();
   }
 
-  /**lowlevel call to trigger changed event*/
-  Notify(previous_value: T) {
-    this.changed_event_.Fire(this.value_, previous_value);
-  }
-
   /**sets the value of the atom */
   Set(value: T) {
     if (value === this.value_) return;
