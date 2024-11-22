@@ -1,5 +1,6 @@
 import { StoreHandler } from "./StoreHandler";
 import type { CleanUp } from "./Types/CleanUp";
+import type { IAtomConfig } from "./Types/IAtomConfig";
 import type { IReadOnlyAtom } from "./Types/IReadOnlyAtom";
 import Broadcaster from "./Utils/Broadcaster";
 
@@ -7,9 +8,11 @@ export default class Atom<T> implements IReadOnlyAtom<T> {
   DebugId = Math.random();
   private value_: T;
   private changed_event_ = new Broadcaster<[value: T, previous_value: T]>();
+  private equals_?: IAtomConfig<T>["Equals"];
 
-  constructor(value: T) {
+  constructor(value: T, config?: IAtomConfig<T>) {
     this.value_ = value;
+    this.equals_ = config?.Equals;
   }
 
   GetSubscribers() {
@@ -18,7 +21,8 @@ export default class Atom<T> implements IReadOnlyAtom<T> {
 
   /**sets the value of the atom */
   Set(value: T) {
-    if (value === this.value_) return;
+    if (this.equals_?.(value, this.value_) ?? value === this.value_) return;
+
     const previous_value = value;
     this.value_ = value;
     if (StoreHandler.IsBatch()) {

@@ -3,9 +3,10 @@ import Computed from "./Computed";
 import Effect from "./Effect";
 import { StoreHandler } from "./StoreHandler";
 import Subscribe from "./Subscribe";
+import type { IAtomConfig } from "./Types/IAtomConfig";
 
-export function atom<T>(value: T) {
-  return new Atom(value);
+export function atom<T>(value: T, config?: IAtomConfig<T>) {
+  return new Atom(value, config);
 }
 
 export type { default as Atom } from "./Atom";

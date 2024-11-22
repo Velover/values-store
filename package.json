@@ -22,12 +22,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Velover/values-store.git"
+    "url": "git+https://github.com/Velover/value-stores.git"
   },
   "author": "Catargo",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Velover/values-store/issues"
+    "url": "https://github.com/Velover/value-stores/issues"
   },
-  "homepage": "https://github.com/Velover/values-store#readme"
+  "homepage": "https://github.com/Velover/value-stores#readme"
 }
