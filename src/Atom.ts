@@ -5,7 +5,8 @@ import type { IReadOnlyAtom } from "./Types/IReadOnlyAtom";
 import Broadcaster from "./Utils/Broadcaster";
 
 export default class Atom<T> implements IReadOnlyAtom<T> {
-  DebugId = Math.random();
+  private debug_id_ = Math.random();
+  private debug_name_?: string;
   private value_: T;
   private changed_event_ = new Broadcaster<[value: T, previous_value: T]>();
   private equals_?: IAtomConfig<T>["Equals"];
@@ -13,6 +14,13 @@ export default class Atom<T> implements IReadOnlyAtom<T> {
   constructor(value: T, config?: IAtomConfig<T>) {
     this.value_ = value;
     this.equals_ = config?.Equals;
+    this.debug_name_ = config?.DebugName;
+  }
+
+  GetDebugInfo(): string {
+    return `atom id: ${this.debug_id_}${
+      this.debug_name_ !== undefined ? ` debug name: ${this.debug_name_}` : ""
+    }`;
   }
 
   GetSubscribers() {
@@ -21,7 +29,9 @@ export default class Atom<T> implements IReadOnlyAtom<T> {
 
   /**sets the value of the atom */
   Set(value: T) {
-    if (this.equals_?.(value, this.value_) ?? value === this.value_) return;
+    if (this.equals_?.(value, this.value_) ?? value === this.value_) {
+      return;
+    }
 
     const previous_value = value;
     this.value_ = value;

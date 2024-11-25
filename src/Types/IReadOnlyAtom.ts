@@ -1,7 +1,6 @@
 import type { CleanUp } from "./CleanUp";
 
 export interface IReadOnlyAtom<T> {
-  DebugId: number;
   /**lowlevel call to get subscribers*/
   GetSubscribers(): ((value: T, previous_value: T) => void)[];
   /**gets the value of the atom */
@@ -14,4 +13,5 @@ export interface IReadOnlyAtom<T> {
   Effect(callback: (value: T, previous_value?: T) => void): CleanUp;
   /**creates computed atom from this atom */
   Computed<Q>(callback: (value: T) => Q): [IReadOnlyAtom<Q>, CleanUp];
+  // GetDebugInfo(): string;
 }
