@@ -5,7 +5,15 @@ import { StoreHandler } from "./StoreHandler";
 import Subscribe from "./Subscribe";
 import type { IAtomConfig } from "./Types/IAtomConfig";
 
-export function atom<T>(value: T, config?: IAtomConfig<T>) {
+export function atom<T>(value: T, config?: IAtomConfig<T>): Atom<T>;
+export function atom<T>(
+  value?: T,
+  config?: IAtomConfig<T>
+): Atom<T | undefined>;
+export function atom(
+  value?: unknown,
+  config?: IAtomConfig<unknown>
+): Atom<unknown> {
   return new Atom(value, config);
 }
 
